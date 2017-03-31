@@ -16,7 +16,6 @@ public class LookupController {
     @Autowired
     LookupRepository lookupRepository;
 
-    @CrossOrigin(origins = "http://localhost:3000")
     @RequestMapping(value = "api/lookup/{type}", method = RequestMethod.GET )
     public List<Lookup> getAll(@PathVariable String type) {
         return lookupRepository.findByDataType(type);

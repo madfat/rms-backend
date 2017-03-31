@@ -11,16 +11,10 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurerAdapter
  * Created by fathoni on 16/11/01.
  */
 @Configuration
-public class WebConfig{
-    @Bean
-    public WebMvcConfigurer corsConfigurer() {
-        return new WebMvcConfigurerAdapter() {
-            @Override
-            public void addCorsMappings(CorsRegistry registry) {
-                registry.addMapping("/api/**")
-                        .allowedMethods("PUT", "DELETE", "POST");
-            }
-        };
+public class WebConfig extends WebMvcConfigurerAdapter{
+    @Override
+    public void addCorsMappings(CorsRegistry registry) {
+        registry.addMapping("/api/**");
     }
 }
 

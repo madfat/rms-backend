@@ -23,7 +23,6 @@ public class EmployeeController {
     @Autowired
     EmployeeRepository employeeRepository;
 
-    @CrossOrigin
     @RequestMapping(value = "/api/employee", method = RequestMethod.POST)
     public ResponseEntity<Employee> employeeAdd(@RequestBody Employee employee) {
         try {
@@ -34,11 +33,9 @@ public class EmployeeController {
         return new ResponseEntity<>(employee, HttpStatus.OK);
     }
 
-    @CrossOrigin
     @RequestMapping(value = "/api/employee", method = RequestMethod.PUT)
     public ResponseEntity<Employee> employeeModify(@RequestBody Employee employee) {
         try {
-   //         Employee oldEmployee = (Employee) employeeRepository.findOne(employee.getId()).clone();
             employeeRepository.save(employee);
         } catch (Exception e) {
             e.printStackTrace();
@@ -47,7 +44,6 @@ public class EmployeeController {
     }
 
 
-    @CrossOrigin(origins = "http://localhost:3000")
     @RequestMapping(value = "/api/employees", method = RequestMethod.GET)
     public ResponseEntity<Page> employeesFindAll(@RequestParam("page") int page, @RequestParam("size") int size) {
         Pageable pageRequest = new PageRequest(page, size);

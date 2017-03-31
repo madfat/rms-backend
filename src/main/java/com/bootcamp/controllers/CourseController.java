@@ -23,7 +23,7 @@ import java.util.List;
 /**
  * Created by fathoni on 16/10/14.
  */
-//@CrossOrigin(origins = ("${app.cross.origin}"))
+
 @RestController
 public class CourseController {
     private final org.slf4j.Logger log = LoggerFactory.getLogger(this.getClass());
