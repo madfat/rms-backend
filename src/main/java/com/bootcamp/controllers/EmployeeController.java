@@ -23,6 +23,13 @@ public class EmployeeController {
     @Autowired
     EmployeeRepository employeeRepository;
 
+    @RequestMapping(value = "/api/employees/findbyname/{name}")
+    public  ResponseEntity<Page> employeeFindByName(@PathVariable String name, @RequestParam("page") int page, @RequestParam("size") int size){
+        PageRequest pageRequest = new PageRequest(page,size);
+        Page<Employee> employees = employeeRepository.findByName(name, pageRequest);
+        return new ResponseEntity<>(employees, HttpStatus.OK);
+    }
+
     @RequestMapping(value = "/api/employee", method = RequestMethod.POST)
     public ResponseEntity<Employee> employeeAdd(@RequestBody Employee employee) {
         try {
