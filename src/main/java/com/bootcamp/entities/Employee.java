@@ -10,7 +10,7 @@ import java.util.List;
 /**
  * Created by nabila.azam on 3/23/2017.
  */
-@Data
+//@Data
 @Entity
 @Table(name = "employee")
 public class Employee {
@@ -104,6 +104,230 @@ public class Employee {
     public Employee(){
     }
 
+    public Employee(String firstName, String lastName, String gender, String phone,
+                    Date dob, String maritalStatus, String email, String grade, String location, Date hiredDate,
+                    String employmentStatus){
+        this.firstName = firstName;
+        this.lastName = lastName;
+        this.gender = gender;
+        this.phone = phone;
+        this.dob =  dob;
+        this.maritalStatus = maritalStatus;
+        this.email = email;
+        this.grade = grade;
+        this.location = location;
+        this.hiredDate = hiredDate;
+        this.employmentStatus = employmentStatus;
+    }
+
     public void finalize() throws Throwable {
+    }
+
+    public Long getId() {
+        return Id;
+    }
+
+    public void setId(Long id) {
+        Id = id;
+    }
+
+    public String getFirstName() {
+        return firstName;
+    }
+
+    public void setFirstName(String firstName) {
+        this.firstName = firstName;
+    }
+
+    public String getLastName() {
+        return lastName;
+    }
+
+    public void setLastName(String lastName) {
+        this.lastName = lastName;
+    }
+
+    public Date getDob() {
+        return dob;
+    }
+
+    public void setDob(Date dob) {
+        this.dob = dob;
+    }
+
+    public String getGender() {
+        return gender;
+    }
+
+    public void setGender(String gender) {
+        this.gender = gender;
+    }
+
+    public String getMaritalStatus() {
+        return maritalStatus;
+    }
+
+    public void setMaritalStatus(String maritalStatus) {
+        this.maritalStatus = maritalStatus;
+    }
+
+    public String getPhone() {
+        return phone;
+    }
+
+    public void setPhone(String phone) {
+        this.phone = phone;
+    }
+
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
+    }
+
+    public String getGrade() {
+        return grade;
+    }
+
+    public void setGrade(String grade) {
+        this.grade = grade;
+    }
+
+    public String getLocation() {
+        return location;
+    }
+
+    public void setLocation(String location) {
+        this.location = location;
+    }
+
+    public Date getHiredDate() {
+        return hiredDate;
+    }
+
+    public void setHiredDate(Date hiredDate) {
+        this.hiredDate = hiredDate;
+    }
+
+    public String getEmploymentStatus() {
+        return employmentStatus;
+    }
+
+    public void setEmploymentStatus(String employmentStatus) {
+        this.employmentStatus = employmentStatus;
+    }
+
+    public String getNationality() {
+        return nationality;
+    }
+
+    public void setNationality(String nationality) {
+        this.nationality = nationality;
+    }
+
+    public String getBusinessUnit() {
+        return businessUnit;
+    }
+
+    public void setBusinessUnit(String businessUnit) {
+        this.businessUnit = businessUnit;
+    }
+
+    public String getDivision() {
+        return division;
+    }
+
+    public void setDivision(String division) {
+        this.division = division;
+    }
+
+    public String getJobFamily() {
+        return jobFamily;
+    }
+
+    public void setJobFamily(String jobFamily) {
+        this.jobFamily = jobFamily;
+    }
+
+    public String getStream() {
+        return stream;
+    }
+
+    public void setStream(String stream) {
+        this.stream = stream;
+    }
+
+    public String getJobTitle() {
+        return jobTitle;
+    }
+
+    public void setJobTitle(String jobTitle) {
+        this.jobTitle = jobTitle;
+    }
+
+    public Date getRetiredDate() {
+        return retiredDate;
+    }
+
+    public void setRetiredDate(Date retiredDate) {
+        this.retiredDate = retiredDate;
+    }
+
+    public Date getSuspendedDate() {
+        return suspendedDate;
+    }
+
+    public void setSuspendedDate(Date suspendedDate) {
+        this.suspendedDate = suspendedDate;
+    }
+
+    public Boolean getActiveInd() {
+        return activeInd;
+    }
+
+    public void setActiveInd(Boolean activeInd) {
+        this.activeInd = activeInd;
+    }
+
+    public List<Dependent> getDependents() {
+        return dependents;
+    }
+
+    public void setDependents(List<Dependent> dependents) {
+        this.dependents = dependents;
+    }
+
+    public List<Location> getLocations() {
+        return locations;
+    }
+
+    public void setLocations(List<Location> locations) {
+        this.locations = locations;
+    }
+
+    public List<GradeHistory> getGradeHistories() {
+        return gradeHistories;
+    }
+
+    public void setGradeHistories(List<GradeHistory> gradeHistories) {
+        this.gradeHistories = gradeHistories;
+    }
+
+    public List<Address> getAddresses() {
+        return addresses;
+    }
+
+    public void setAddresses(List<Address> addresses) {
+        this.addresses = addresses;
+    }
+
+    public List<EmpHistory> getEmpHistories() {
+        return empHistories;
+    }
+
+    public void setEmpHistories(List<EmpHistory> empHistories) {
+        this.empHistories = empHistories;
     }
 }

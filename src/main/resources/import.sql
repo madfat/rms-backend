@@ -30,6 +30,7 @@ insert into dbo.lookup_master(type, description) values ('DIV', 'Division');
 insert into dbo.lookup_master(type, description) values ('JOBFAM', 'Job Family');
 insert into dbo.lookup_master(type, description) values ('STREAM', 'Stream');
 insert into dbo.lookup_master(type, description) values ('JOBTIT', 'Job Title');
+insert into dbo.lookup_master(type, description) values ('LOC', 'Location');
 
 --insert into Lookup table
 insert into dbo.lookup(data_code, data_desc, data_type) values ('S', 'Single', 'MARITAL');
@@ -58,3 +59,9 @@ insert into dbo.lookup(data_code, data_desc, data_type) values ('JWT', 'Java Web
 
 insert into dbo.lookup(data_code, data_desc, data_type) values ('M', 'Male', 'GENDER');
 insert into dbo.lookup(data_code, data_desc, data_type) values ('F', 'Female', 'GENDER');
+
+insert into dbo.lookup(data_code, data_desc, data_type) values ('D', 'Bali', 'LOC');
+insert into dbo.lookup(data_code, data_desc, data_type) values ('Y', 'Yogyakarta', 'LOC');
+insert into dbo.lookup(data_code, data_desc, data_type) values ('J', 'Jakarta', 'LOC');
+insert into dbo.lookup(data_code, data_desc, data_type) values ('H', 'Hanoi', 'LOC');
+insert into dbo.lookup(data_code, data_desc, data_type) values ('B', 'Bandung', 'LOC');

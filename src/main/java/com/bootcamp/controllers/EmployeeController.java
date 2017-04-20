@@ -80,7 +80,7 @@ public class EmployeeController {
 
 
     @RequestMapping(value = "/api/employees", method = RequestMethod.GET)
-    public ResponseEntity<Page> employeesFindAll(@RequestParam("page") int page, @RequestParam("size") int size) {
+    public ResponseEntity<Page> findAllEmployees(@RequestParam("page") int page, @RequestParam("size") int size) {
         Pageable pageRequest = new PageRequest(page, size);
         List<Employee> employees = (List<Employee>)employeeRepository.findAllByOrderByFirstNameAsc();
         Page<Employee> employeePage = getEmployeePage(employees, pageRequest);
@@ -112,6 +112,10 @@ public class EmployeeController {
 
         if (!StringUtils.isEmpty(filter.getGender())){
             condition = condition.and(employee.gender.eq(filter.getGender()));
+        }
+
+        if (!StringUtils.isEmpty(filter.getLocation())) {
+            condition = condition.and(employee.location.eq(filter.getLocation()));
         }
 
         return query.from(employee).where(condition).list(employee);
