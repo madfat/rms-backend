@@ -19,7 +19,7 @@ public class Address {
     private String address;
 
     @Column(name = "active_ind")
-    private Boolean active_ind=false;
+    private Boolean activeInd=false;
 
     public Long getId() {
         return Id;
@@ -37,12 +37,12 @@ public class Address {
         this.address = address;
     }
 
-    public Boolean getActive_ind() {
-        return active_ind;
+    public Boolean getActiveInd() {
+        return activeInd;
     }
 
-    public void setActive_ind(Boolean active_ind) {
-        this.active_ind = active_ind;
+    public void setActivend(Boolean activeInd) {
+        this.activeInd = activeInd;
     }
 
     public Address (){}

@@ -1,6 +1,5 @@
 package com.bootcamp;
 
-import com.bootcamp.constants.Gender;
 import com.bootcamp.entities.Employee;
 import com.bootcamp.repositories.EmployeeRepository;
 import org.junit.Before;
