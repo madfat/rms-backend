@@ -1,13 +1,23 @@
 package com.bootcamp;
 
+import com.bootcamp.controllers.EmployeeController;
 import com.bootcamp.entities.Employee;
+import com.bootcamp.entities.FilterCriteria;
 import com.bootcamp.repositories.EmployeeRepository;
+import com.fasterxml.jackson.databind.JsonNode;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.mysema.query.jpa.impl.JPAQuery;
+import org.hamcrest.Matchers;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
+import org.mockito.InjectMocks;
+import org.mockito.Mock;
+import org.mockito.Mockito;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.hateoas.MediaTypes;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
@@ -29,11 +39,11 @@ import java.nio.charset.Charset;
 import java.util.Arrays;
 
 import static java.lang.Math.toIntExact;
-import static org.hamcrest.Matchers.comparesEqualTo;
-import static org.hamcrest.Matchers.equalToIgnoringCase;
+import static org.hamcrest.Matchers.*;
 import static org.hamcrest.core.Is.is;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
+import static org.mockito.Matchers.*;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
@@ -48,6 +58,15 @@ public class EmployeeControllerTest {
 
     @Autowired
     private MockMvc mockMvc;
+
+    @Mock
+    EmployeeRepository empRepo;
+
+    @Mock
+    JPAQuery jpaQuery;
+
+    @InjectMocks
+    EmployeeController employeeController;
 
     private MediaType halContentType = new MediaType(MediaTypes.HAL_JSON, Charset.forName("utf8"));
     private MediaType jsonContentType = new MediaType(MediaType.APPLICATION_JSON.getType(),
@@ -86,6 +105,20 @@ public class EmployeeControllerTest {
         this.employeeRepository.deleteAll();
     }
 
+//    @Test
+//    public void employeeAddClass()throws Exception{
+//
+//        Mockito.verify(empRepo).save(any(Employee.class));
+//    }
+//
+//    @Test
+//    public void employeeFindByNameClass() throws Exception{
+//        PageRequest pageRequest = new PageRequest(10,1);
+//        employeeController.employeeFindByName(anyString(), 10, anyInt());
+//
+//        Mockito.verify(empRepo.findByName(anyString(),anyObject()));
+//    }
+
     @Test
     public void employeeAdd() throws Exception {
         Employee newEmployee = new Employee();
@@ -95,7 +128,17 @@ public class EmployeeControllerTest {
         newEmployee.setGender("M");
         newEmployee.setMaritalStatus("S");
 
-        String expectedResult = "{\"firstName\":\"FirstName\",\"lastName\":\"lastName\",\"dob\":null,\"gender\":\"M\",\"maritalStatus\":\"S\",\"phone\":null,\"email\":\"first.last@employee.com\",\"grade\":null,\"location\":null,\"hiredDate\":null,\"employmentStatus\":null,\"nationality\":null,\"businessUnit\":null,\"division\":null,\"jobFamily\":null,\"stream\":null,\"jobTitle\":null,\"retiredDate\":null,\"suspendedDate\":null,\"activeInd\":false,\"dependents\":null,\"locations\":null,\"gradeHistories\":null,\"addresses\":null,\"empHistories\":null,\"id\":1}";
+        mockMvc.perform(post("/api/employee")
+                .contentType(jsonContentType)
+                .content(this.json(newEmployee)))
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$.firstName",equalToIgnoringCase("FirstName")));
+
+/*
+    //
+    // We also can use something like this as well
+    //
+        String expectedResult = "{\"firstName\":\"FirstName\",\"lastName\":\"lastName\",\"dob\":null,\"gender\":\"M\",\"maritalStatus\":\"S\",\"phone\":null,\"email\":\"first.last@employee.com\",\"grade\":null,\"location\":null,\"hiredDate\":null,\"employmentStatus\":null,\"nationality\":null,\"businessUnit\":null,\"division\":null,\"jobFamily\":null,\"stream\":null,\"jobTitle\":null,\"retiredDate\":null,\"suspendedDate\":null,\"activeInd\":false,\"dependents\":null,\"locations\":null,\"gradeHistories\":null,\"addresses\":null,\"empHistories\":null,\"id\":2}";
 
         RequestBuilder requestBuilder = MockMvcRequestBuilders
                 .post("/api/employee")
@@ -106,7 +149,7 @@ public class EmployeeControllerTest {
 
         MockHttpServletResponse response = result.getResponse();
         assertEquals(HttpStatus.OK.value(), response.getStatus());
-        assertEquals(expectedResult, response.getContentAsString());
+        assertEquals(expectedResult, response.getContentAsString());*/
     }
 
     @Test
@@ -118,13 +161,13 @@ public class EmployeeControllerTest {
         newEmployee.setGender("M");
         newEmployee.setMaritalStatus("S");
 
-        String expectedResult = "{\"firstName\":\"Employee\",\"lastName\":\"Name\",\"dob\":null,\"gender\":\"M\",\"maritalStatus\":\"S\",\"phone\":null,\"email\":\"employee.name@employee.com\",\"grade\":null,\"location\":null,\"hiredDate\":null,\"employmentStatus\":null,\"nationality\":null,\"businessUnit\":null,\"division\":null,\"jobFamily\":null,\"stream\":null,\"jobTitle\":null,\"retiredDate\":null,\"suspendedDate\":null,\"activeInd\":false,\"dependents\":[],\"locations\":[],\"gradeHistories\":[],\"addresses\":[],\"empHistories\":[],\"id\":1}";
+//        String expectedResult = "{\"firstName\":\"Employee\",\"lastName\":\"Name\",\"dob\":null,\"gender\":\"M\",\"maritalStatus\":\"S\",\"phone\":null,\"email\":\"employee.name@employee.com\",\"grade\":null,\"location\":null,\"hiredDate\":null,\"employmentStatus\":null,\"nationality\":null,\"businessUnit\":null,\"division\":null,\"jobFamily\":null,\"stream\":null,\"jobTitle\":null,\"retiredDate\":null,\"suspendedDate\":null,\"activeInd\":false,\"dependents\":[],\"locations\":[],\"gradeHistories\":[],\"addresses\":[],\"empHistories\":[],\"id\":1}";
 
         Employee savedEmployee = employeeRepository.save(newEmployee);
 /*
-    --
-    -- We also can use something like this as well
-    --
+    //
+    // We also can use something like this as well
+    //
         RequestBuilder requestBuilder = MockMvcRequestBuilders
                 .get("/api/employee/" + employee.getId())
                 .accept(MediaType.APPLICATION_JSON);
@@ -142,5 +185,65 @@ public class EmployeeControllerTest {
                 .andExpect(jsonPath("$.id", comparesEqualTo(toIntExact(savedEmployee.getId()))))
                 .andExpect(jsonPath("$.firstName", equalToIgnoringCase(newEmployee.getFirstName())));
 
+    }
+
+    @Test
+    public void employeeFindByFilter() throws Exception{
+        createDummyEmployees();
+
+        FilterCriteria filter = new FilterCriteria();
+        // the backend filter only suppoert search by gender, location and grade
+        filter.setGender("M");
+
+        mockMvc.perform(post("/api/employees/findbycriteria?page=0&size=10")
+                .contentType(jsonContentType)
+                .content(this.json(filter)))
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$.content[0].firstName",equalToIgnoringCase("Hulk")))
+                .andExpect(jsonPath("$.totalElements", comparesEqualTo(2)));
+
+    }
+
+    private void createDummyEmployees(){
+        Employee Emp1 = new Employee();
+        Emp1.setFirstName("Hulk");
+        Emp1.setLastName("Hogan");
+        Emp1.setEmail("hulk.hogan@employee.com");
+        Emp1.setGender("M");
+        Emp1.setMaritalStatus("S");
+        Emp1.setLocation("Yogyakarta");
+        Emp1.setGrade("AP");
+
+        Employee Emp2 = new Employee();
+        Emp2.setFirstName("Angelina");
+        Emp2.setLastName("Jolie");
+        Emp2.setEmail("angelina.jolie@employee.com");
+        Emp2.setGender("F");
+        Emp2.setMaritalStatus("M");
+        Emp2.setLocation("Yogyakarta");
+        Emp2.setGrade("AP");
+
+        Employee Emp3 = new Employee();
+        Emp3.setFirstName("Dian");
+        Emp3.setLastName("Sastro");
+        Emp3.setEmail("dian.sastro@employee.com");
+        Emp3.setGender("F");
+        Emp3.setMaritalStatus("M");
+        Emp3.setLocation("Yogyakarta");
+        Emp3.setGrade("AP");
+
+        Employee Emp4 = new Employee();
+        Emp4.setFirstName("Andrew");
+        Emp4.setLastName("Long");
+        Emp4.setEmail("andrew.long@employee.com");
+        Emp4.setGender("M");
+        Emp4.setMaritalStatus("M");
+        Emp4.setLocation("Yogyakarta");
+        Emp4.setGrade("AN");
+
+        employeeRepository.save(Emp1);
+        employeeRepository.save(Emp2);
+        employeeRepository.save(Emp3);
+        employeeRepository.save(Emp4);
     }
 }
